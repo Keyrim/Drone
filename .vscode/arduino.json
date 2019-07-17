@@ -1,3 +1,5 @@
 {
-    "board": "arduino:avr:uno"
+    "board": "arduino:avr:uno",
+    "port": "COM6",
+    "sketch": "Stabilisation2motor\\Stabilisation2motor.ino"
 }

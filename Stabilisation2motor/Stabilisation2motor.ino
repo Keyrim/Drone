@@ -91,6 +91,7 @@ void setup()
     left_esc.writeMicroseconds(1000);
     right_esc.writeMicroseconds(1000);
     delay(4000);
+    Serial.println(1000000/frequence);
     
 }
 
@@ -116,9 +117,9 @@ void loop()
     right_esc.writeMicroseconds(signal_esc2);
 
     //We regulate our frequence here
-    while(micros()<loop_timer + 1000*(1/frequence));
+    while(micros()<loop_timer + 1000000*(1/frequence));
     loop_timer = micros();
-    Serial.println(X);
+    //Serial.println(loop_timer);
 
     
 
