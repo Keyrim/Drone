@@ -34,12 +34,14 @@
             this.textBox_port_com = new System.Windows.Forms.TextBox();
             this.button_conexion = new System.Windows.Forms.Button();
             this.textBox_conexion_state = new System.Windows.Forms.TextBox();
+            this.textBox_informations = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_arduino_port)).BeginInit();
             this.SuspendLayout();
             // 
             // arduino
             // 
             this.arduino.BaudRate = 115200;
+            this.arduino.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.Arduino_DataReceived);
             // 
             // numericUpDown_arduino_port
             // 
@@ -84,11 +86,20 @@
             this.textBox_conexion_state.TabIndex = 5;
             this.textBox_conexion_state.Text = "Conexion State : Not Conected";
             // 
+            // textBox_informations
+            // 
+            this.textBox_informations.Location = new System.Drawing.Point(12, 80);
+            this.textBox_informations.Multiline = true;
+            this.textBox_informations.Name = "textBox_informations";
+            this.textBox_informations.Size = new System.Drawing.Size(186, 45);
+            this.textBox_informations.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 461);
+            this.Controls.Add(this.textBox_informations);
             this.Controls.Add(this.textBox_conexion_state);
             this.Controls.Add(this.button_conexion);
             this.Controls.Add(this.textBox_port_com);
@@ -107,6 +118,7 @@
         private System.Windows.Forms.TextBox textBox_port_com;
         private System.Windows.Forms.Button button_conexion;
         private System.Windows.Forms.TextBox textBox_conexion_state;
+        private System.Windows.Forms.TextBox textBox_informations;
     }
 }
 
