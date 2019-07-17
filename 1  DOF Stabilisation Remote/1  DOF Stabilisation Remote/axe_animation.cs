@@ -34,7 +34,6 @@ namespace _1__DOF_Stabilisation_Remote
 
         private void picture_box_paint(object sender, PaintEventArgs e)
         {
-
             e.Graphics.DrawLine(pen,500, 0,  pictureBox.Width/2, pictureBox.Height/2);            
         }
 
