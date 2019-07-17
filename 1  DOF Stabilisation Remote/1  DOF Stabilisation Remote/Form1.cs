@@ -44,5 +44,12 @@ namespace _1__DOF_Stabilisation_Remote
             }
                 
         }
+
+        private void Arduino_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+            string message = arduino.ReadLine();
+            textBox_informations.Invoke((MethodInvoker)delegate { textBox_informations.Text = message; });
+
+        }
     }
 }
