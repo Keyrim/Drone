@@ -26,9 +26,19 @@ namespace _1__DOF_Stabilisation_Remote
         }
 
 
-        private void Button1_Click(object sender, EventArgs e)
+        
+
+        private void Button_conexion_Click(object sender, EventArgs e)
         {
-            axe.pictureBox.Invalidate();
+            try
+            {
+                arduino.Open();
+            }
+            catch
+            {
+
+            }
+                
         }
     }
 }
