@@ -61,6 +61,7 @@ void setup()
     //Initialize the pin for the ESC
     left_esc.attach(ESC1);
     right_esc.attach(ESC2);
+    pinMode(13, OUTPUT);
 
     // Wake up the mpu 
     Wire.begin();
@@ -90,8 +91,6 @@ void setup()
     
     left_esc.writeMicroseconds(1000);
     right_esc.writeMicroseconds(1000);
-    delay(4000);
-    Serial.println(1000000/frequence);
     
 }
 
@@ -110,6 +109,9 @@ void loop()
     p = error * kP ;
     d = (error - last_error) * kD ;
     i += error * kI ;
+    Serial.println((int)X);
+    if (X > 0)digitalWrite(13, HIGH);
+    else digitalWrite(13, LOW);
     signal_esc1 = p + i + d + global_power ;
     signal_esc2 = - p - i - d + global_power ;
     last_error = error ;
@@ -117,9 +119,10 @@ void loop()
     right_esc.writeMicroseconds(signal_esc2);
 
     //We regulate our frequence here
-    while(micros()<loop_timer + 1000000*(1/frequence));
+    while(micros()<loop_timer + 1000000/frequence);
     loop_timer = micros();
-    //Serial.println(loop_timer);
+
+    
 
     
 

@@ -10,7 +10,7 @@ namespace _1__DOF_Stabilisation_Remote
 {
     class Axe_animation
     {
-        public float angle = 0;
+        public double angle = 0;
         public PictureBox pictureBox = new PictureBox();
         public Pen pen = new Pen(Brushes.Black);
 
@@ -34,11 +34,12 @@ namespace _1__DOF_Stabilisation_Remote
 
         private void picture_box_paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawLine(pen,500, 0,  pictureBox.Width/2, pictureBox.Height/2);            
+            e.Graphics.DrawLine(pen,(int)Math.Cos((angle + 90) / 180 * Math.PI) * 100,
+                (int)Math.Sin((angle+90)/180*Math.PI)*100,  pictureBox.Width/2, pictureBox.Height/2);            
         }
 
 
-
+        
 
 
     }
