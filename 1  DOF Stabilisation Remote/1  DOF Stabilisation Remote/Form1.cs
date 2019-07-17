@@ -12,30 +12,23 @@ namespace _1__DOF_Stabilisation_Remote
 {
     public partial class Form1 : Form
     {
-        Pen dark_blue_pen = new Pen(Brushes.DarkBlue);
+        Axe_animation axe = new Axe_animation(500, 500);
+        
 
         
         public Form1()
         {
             InitializeComponent();
-            dark_blue_pen.Width = 8.0F;
-            dark_blue_pen.LineJoin = System.Drawing.Drawing2D.LineJoin.Bevel;
+            axe.set_window(this.Width/2 -250, this.Height/2-250);
+            this.Controls.Add(axe.pictureBox);
+            
             
         }
 
-        private void PictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PictureBox1_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.DrawLine(dark_blue_pen, 0, 0, 500, 500);
-        }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            pictureBox1.Invalidate();
+            axe.pictureBox.Invalidate();
         }
     }
 }

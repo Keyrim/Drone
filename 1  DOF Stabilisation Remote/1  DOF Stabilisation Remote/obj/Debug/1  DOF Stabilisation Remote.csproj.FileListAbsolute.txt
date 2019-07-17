@@ -8,3 +8,13 @@ D:\Git Hub\Arduino\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\bin\D
 D:\Git Hub\Arduino\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\bin\Debug\1  DOF Stabilisation Remote.pdb
 D:\Git Hub\Arduino\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.exe
 D:\Git Hub\Arduino\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.pdb
+D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\bin\Debug\1  DOF Stabilisation Remote.exe.config
+D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\bin\Debug\1  DOF Stabilisation Remote.exe
+D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\bin\Debug\1  DOF Stabilisation Remote.pdb
+D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.csprojAssemblyReference.cache
+D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\_1__DOF_Stabilisation_Remote.Form1.resources
+D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\_1__DOF_Stabilisation_Remote.Properties.Resources.resources
+D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.csproj.GenerateResource.cache
+D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.csproj.CoreCompileInputs.cache
+D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.exe
+D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.pdb
