@@ -99,11 +99,11 @@ void loop()
     read_mpu();
     //Compute our raw values
     float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);    
-    AcX = asin(AcX/total_vector)*57.32;
+    AcX = asin(AcX/total_vector)*57.32; //arcsin c'est en radian 
     AcY = asin(AcY/total_vector)*57.32;
     //Complementary filter now
-    X += GyX / frequence ;
-    if(total_vector<max_total_vector)X = X * 0.98 + AcY * 0.02 ;
+    X += GyX / frequence ; //angle par sec * sec = angle donc angle par sec / frequence = angle 
+    X = X * 0.98 + AcY * 0.02 ;
 
     error = consigne - X ;
     p = error * kP ;
