@@ -33,6 +33,7 @@
             this.numericUpDown_arduino_port = new System.Windows.Forms.NumericUpDown();
             this.textBox_port_com = new System.Windows.Forms.TextBox();
             this.button_conexion = new System.Windows.Forms.Button();
+            this.textBox_conexion_state = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_arduino_port)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,11 +76,20 @@
             this.button_conexion.UseVisualStyleBackColor = true;
             this.button_conexion.Click += new System.EventHandler(this.Button_conexion_Click);
             // 
+            // textBox_conexion_state
+            // 
+            this.textBox_conexion_state.Location = new System.Drawing.Point(12, 54);
+            this.textBox_conexion_state.Name = "textBox_conexion_state";
+            this.textBox_conexion_state.Size = new System.Drawing.Size(186, 20);
+            this.textBox_conexion_state.TabIndex = 5;
+            this.textBox_conexion_state.Text = "Conexion State : Not Conected";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 461);
+            this.Controls.Add(this.textBox_conexion_state);
             this.Controls.Add(this.button_conexion);
             this.Controls.Add(this.textBox_port_com);
             this.Controls.Add(this.numericUpDown_arduino_port);
@@ -96,6 +106,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_arduino_port;
         private System.Windows.Forms.TextBox textBox_port_com;
         private System.Windows.Forms.Button button_conexion;
+        private System.Windows.Forms.TextBox textBox_conexion_state;
     }
 }
 

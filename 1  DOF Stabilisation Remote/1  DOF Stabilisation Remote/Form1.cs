@@ -12,14 +12,14 @@ namespace _1__DOF_Stabilisation_Remote
 {
     public partial class Form1 : Form
     {
-        Axe_animation axe = new Axe_animation(500, 500);
+        Axe_animation axe = new Axe_animation(300, 200);
         
 
         
         public Form1()
         {
             InitializeComponent();
-            axe.set_window(this.Width/2 -250, this.Height/2-250);
+            axe.set_window(this.Width/2 -150, this.Height/2-100);
             this.Controls.Add(axe.pictureBox);
             
             
@@ -33,10 +33,14 @@ namespace _1__DOF_Stabilisation_Remote
             try
             {
                 arduino.Open();
+                textBox_conexion_state.Invoke((MethodInvoker)delegate {
+                    textBox_conexion_state.Text = "Conexion State = Conected"; });
+
             }
             catch
             {
-
+                textBox_conexion_state.Invoke((MethodInvoker)delegate {
+                    textBox_conexion_state.Text = "Conexion State = Not Conected"; });
             }
                 
         }

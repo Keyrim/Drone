@@ -18,3 +18,13 @@ D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Deb
 D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.csproj.CoreCompileInputs.cache
 D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.exe
 D:\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.pdb
+C:\Users\Theo\Documents\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\bin\Debug\1  DOF Stabilisation Remote.exe.config
+C:\Users\Theo\Documents\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\bin\Debug\1  DOF Stabilisation Remote.exe
+C:\Users\Theo\Documents\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\bin\Debug\1  DOF Stabilisation Remote.pdb
+C:\Users\Theo\Documents\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.csprojAssemblyReference.cache
+C:\Users\Theo\Documents\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\_1__DOF_Stabilisation_Remote.Form1.resources
+C:\Users\Theo\Documents\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\_1__DOF_Stabilisation_Remote.Properties.Resources.resources
+C:\Users\Theo\Documents\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.csproj.GenerateResource.cache
+C:\Users\Theo\Documents\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.csproj.CoreCompileInputs.cache
+C:\Users\Theo\Documents\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.exe
+C:\Users\Theo\Documents\Git Hub\Drone\1  DOF Stabilisation Remote\1  DOF Stabilisation Remote\obj\Debug\1  DOF Stabilisation Remote.pdb

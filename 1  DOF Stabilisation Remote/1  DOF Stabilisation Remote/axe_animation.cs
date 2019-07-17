@@ -12,7 +12,7 @@ namespace _1__DOF_Stabilisation_Remote
     {
         public float angle = 0;
         public PictureBox pictureBox = new PictureBox();
-        public Pen pen = new Pen(Brushes.DarkBlue);
+        public Pen pen = new Pen(Brushes.Black);
 
 
         public Axe_animation(int width, int height)
@@ -23,7 +23,7 @@ namespace _1__DOF_Stabilisation_Remote
             pictureBox.BorderStyle = BorderStyle.FixedSingle;
             pictureBox.Visible = true;
             pictureBox.Paint += picture_box_paint;
-            pictureBox.BackColor = Color.Black;
+            pictureBox.BackColor = Color.AliceBlue;
         }
 
         public void set_window(int left_side, int top)
