@@ -91,6 +91,7 @@ void setup()
     
     left_esc.writeMicroseconds(1000);
     right_esc.writeMicroseconds(1000);
+    delay(4000);
     
 }
 
@@ -109,7 +110,8 @@ void loop()
     p = error * kP ;
     d = (error - last_error) * kD ;
     i += error * kI ;
-    Serial.println((int)X);
+    Serial.print(X+90);           //+90 to get a positive value
+    Serial.print("\n");
     if (X > 0)digitalWrite(13, HIGH);
     else digitalWrite(13, LOW);
     signal_esc1 = p + i + d + global_power ;

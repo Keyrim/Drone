@@ -51,19 +51,19 @@ namespace _1__DOF_Stabilisation_Remote
         {
             while (arduino.BytesToRead > 0)
             {
-                string message = arduino.ReadLine();
+                string message = arduino.ReadLine();        
+                
+                message = message.Replace(".", ",");
                 try
                 {
-                    axe.angle = -1 * Convert.ToInt32(message, new CultureInfo("en-US"));
+                    axe.angle =-1* Convert.ToDouble(message);
                 }
                 catch { }
-                axe.pictureBox.Invalidate();
-                
                 textBox_informations.Invoke((MethodInvoker)delegate
                 {
-                    textBox_conexion_state.Text = axe.angle.ToString();
-                    
+                    textBox_informations.Text = axe.angle.ToString();                    
                 });
+                axe.pictureBox.Invalidate();
 
             }
             
