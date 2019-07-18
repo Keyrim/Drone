@@ -74,5 +74,34 @@ namespace _1__DOF_Stabilisation_Remote
         {
             if (arduino.IsOpen) arduino.Close();
         }
+
+        private void Button_on_Click(object sender, EventArgs e)
+        {
+            send_msg(0, (int)numericUpDown_global_power.Value);
+        }
+
+        private void send_msg(int indice, int value )
+        {
+            //0 is for a power off, value is 0 
+            //1 is for a power on sending the global power setting as value
+            //Values for pid setting are sent as integerso we multiply the value by 1000  before sending them
+            //2 is for a p setting, the value sent is the p value times 1000
+            //3 is for a i setting, the value sent is the i value times 1000
+            //4 is for a d setting, the value sent is the d value times 1000
+
+            arduino.WriteLine((value << 4 + indice).ToString());
+        }
+
+        private void Button_off_Click(object sender, EventArgs e)
+        {
+            send_msg(0, 0);
+        }
+
+        private void Button_send_pid_Click(object sender, EventArgs e)
+        {
+            send_msg(2, (int)(numericUpDown_p.Value*1000));
+            send_msg(3, (int)(numericUpDown_p.Value*1000));
+            send_msg(4, (int)(numericUpDown_p.Value*1000));
+        }
     }
 }

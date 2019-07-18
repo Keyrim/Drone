@@ -7,10 +7,13 @@
 #include <Wire.h>
 #include <Servo.h>
 const int MPU=0x68;  // I2C address of the MPU-6050
-const int frequence = 250; //Frequence of the loop in hz
 const float max_total_vector = 1.2 ;
+bool global_state = false ;  //true means motor are on and false means motors are off
+
+//timer things
 unsigned long loop_timer ; 
 unsigned long start_timer_esc ;
+const int frequence = 250; //Frequence of the loop in hz
 //raw data
 float AcX, AcY, AcZ, GyX=0, GyY=0, GyZ=0;
 float X=0, Y=0;
@@ -22,6 +25,11 @@ Servo left_esc ;
 //Signal ESC 
 unsigned int signal_esc1 = 1000, signal_esc2 = 1000 ;
 
+//Serial things
+int data_value =0;
+int data_indice = 0 ;
+String full_msg = "";
+
 //regulations thngs
 float consigne = 0 ;
 const float kP = 1, kD = 1 , kI = 0.00;
@@ -29,6 +37,25 @@ float error, last_error = 0 ;
 float p, i, d;
 int global_power = 1100 ; 
 
+bool read_serial()
+{
+    char msg = Serial.read();
+    if(msg == '\n')
+    {
+        data_received = full_msg.toInt();
+        data_indice = data_received & 15;
+        data_received = (data_received-data_indice)>>4; 
+        full_msg = "";
+        return true;
+    }
+    else
+    {
+        full_msg +=msg ;
+        return 0;
+    }
+    
+
+}
 
 void read_mpu()
 {
@@ -97,28 +124,46 @@ void setup()
 
 void loop()
 {
-    read_mpu();
-    //Compute our raw values
-    float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);    
-    AcX = asin(AcX/total_vector)*57.32; //arcsin c'est en radian 
-    AcY = asin(AcY/total_vector)*57.32;
-    //Complementary filter now
-    X += GyX / frequence ; //angle par sec * sec = angle donc angle par sec / frequence = angle 
-    X = X * 0.98 + AcY * 0.02 ;
+    if(read_serial())
+    {
+        if(data_indice == 0 )global_state = false ;
+        else if(data_indice == 1)
+        {
+            global_power = data_value ;
+            global_state = true ;
+        }
+    }
+    if(global_state)
+    {
+        read_mpu();
+        //Compute our raw values
+        float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);    
+        AcX = asin(AcX/total_vector)*57.32; //arcsin c'est en radian 
+        AcY = asin(AcY/total_vector)*57.32;
+        //Complementary filter now
+        X += GyX / frequence ; //angle par sec * sec = angle donc angle par sec / frequence = angle 
+        X = X * 0.98 + AcY * 0.02 ;
 
-    error = consigne - X ;
-    p = error * kP ;
-    d = (error - last_error) * kD ;
-    i += error * kI ;
-    Serial.print(X+90);           //+90 to get a positive value
-    Serial.print("\n");
-    if (X > 0)digitalWrite(13, HIGH);
-    else digitalWrite(13, LOW);
-    signal_esc1 = p + i + d + global_power ;
-    signal_esc2 = - p - i - d + global_power ;
-    last_error = error ;
-    left_esc.writeMicroseconds(signal_esc1);
-    right_esc.writeMicroseconds(signal_esc2);
+        error = consigne - X ;
+        p = error * kP ;
+        d = (error - last_error) * kD ;
+        i += error * kI ;
+        Serial.print(X+90);           //+90 to get a positive value
+        Serial.print("\n");
+        if (X > 0)digitalWrite(13, HIGH);
+        else digitalWrite(13, LOW);
+        signal_esc1 = p + i + d + global_power ;
+        signal_esc2 = - p - i - d + global_power ;
+        last_error = error ;
+        left_esc.writeMicroseconds(signal_esc1);
+        right_esc.writeMicroseconds(signal_esc2);
+    }
+    else
+    {
+        left_esc.writeMicroseconds(1000);
+        right_esc.writeMicroseconds(1000);
+    }
+    
 
     //We regulate our frequence here
     while(micros()<loop_timer + 1000000/frequence);
