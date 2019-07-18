@@ -42,9 +42,16 @@ bool read_serial()
     char msg = Serial.read();
     if(msg == '\n')
     {
-        data_received = full_msg.toInt();
-        data_indice = data_received & 15;
-        data_received = (data_received-data_indice)>>4; 
+        
+        
+        data_value = full_msg.toInt();
+        Serial.print(data_value);
+        Serial.print("\n");
+        data_indice = data_value & 15;
+        if(data_indice !=0)digitalWrite(13, HIGH);
+        else digitalWrite(13, LOW);
+        data_value = (data_value-data_indice)>>4; 
+       
         full_msg = "";
         return true;
     }
@@ -124,13 +131,16 @@ void setup()
 
 void loop()
 {
-    if(read_serial())
+    if(Serial.available())
     {
-        if(data_indice == 0 )global_state = false ;
-        else if(data_indice == 1)
+        if(read_serial())
         {
-            global_power = data_value ;
-            global_state = true ;
+            if(data_indice == 0 )global_state = false ;
+            else if(data_indice == 13)
+            {
+                global_power = data_value ;
+                global_state = true ;
+            }
         }
     }
     if(global_state)
@@ -150,8 +160,9 @@ void loop()
         i += error * kI ;
         Serial.print(X+90);           //+90 to get a positive value
         Serial.print("\n");
-        if (X > 0)digitalWrite(13, HIGH);
-        else digitalWrite(13, LOW);
+
+        /*if (X > 0)digitalWrite(13, HIGH);
+        else digitalWrite(13, LOW); */
         signal_esc1 = p + i + d + global_power ;
         signal_esc2 = - p - i - d + global_power ;
         last_error = error ;

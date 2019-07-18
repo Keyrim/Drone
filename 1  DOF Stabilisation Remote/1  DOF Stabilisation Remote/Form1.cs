@@ -77,7 +77,7 @@ namespace _1__DOF_Stabilisation_Remote
 
         private void Button_on_Click(object sender, EventArgs e)
         {
-            send_msg(0, (int)numericUpDown_global_power.Value);
+            send_msg(13, (int)numericUpDown_global_power.Value);
         }
 
         private void send_msg(int indice, int value )
@@ -88,8 +88,10 @@ namespace _1__DOF_Stabilisation_Remote
             //2 is for a p setting, the value sent is the p value times 1000
             //3 is for a i setting, the value sent is the i value times 1000
             //4 is for a d setting, the value sent is the d value times 1000
+            int valeur = value << 4;
+            valeur += indice;
 
-            arduino.WriteLine((value << 4 + indice).ToString());
+            arduino.WriteLine(valeur.ToString());
         }
 
         private void Button_off_Click(object sender, EventArgs e)

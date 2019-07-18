@@ -206,7 +206,7 @@
             this.numericUpDown_global_power.Size = new System.Drawing.Size(103, 20);
             this.numericUpDown_global_power.TabIndex = 14;
             this.numericUpDown_global_power.Value = new decimal(new int[] {
-            1000,
+            1100,
             0,
             0,
             0});
