@@ -166,7 +166,7 @@ void loop()
         AcX = asin(AcX/total_vector)*57.32; //arcsin c'est en radian 
         AcY = asin(AcY/total_vector)*57.32;
         //Kalman filter aplication
-        X = AcY;
+        X = kalman.getAngle(AcY, GyX, 0.004);
 
         error = consigne - X ;
         p = error * kP ;

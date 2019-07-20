@@ -25,7 +25,7 @@ namespace _1__DOF_Stabilisation_Remote
             
         }
 
-
+s
         
 
         private void Button_conexion_Click(object sender, EventArgs e)
