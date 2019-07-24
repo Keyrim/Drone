@@ -7,7 +7,6 @@
 #include <Wire.h>
 #include <Servo.h>
 const int MPU=0x68;  // I2C address of the MPU-6050
-const float max_total_vector = 1.2 ;
 bool global_state = false ;  //true means motor are on and false means motors are off
 
 //timer things
@@ -32,7 +31,7 @@ String full_msg = "";
 
 //regulations thngs
 float consigne = 0 ;
-const float kP = 1, kD = 1 , kI = 0.00;
+float kP = 0, kD = 0 , kI = 0.00;
 float error, last_error = 0 ;
 float p, i, d;
 int global_power = 1100 ; 
@@ -136,11 +135,15 @@ void loop()
         if(read_serial())
         {
             if(data_indice == 0 )global_state = false ;
-            else if(data_indice == 13)
+            else if(data_indice == 1)
             {
                 global_power = data_value ;
                 global_state = true ;
             }
+            else if(data_indice == 2)kP = (float)(data_value/1000);
+            else if(data_indice == 3)kD = (float)(data_value/1000);
+            else if(data_indice == 4)kI = (float)(data_value/1000);
+
         }
     }
     if(global_state)

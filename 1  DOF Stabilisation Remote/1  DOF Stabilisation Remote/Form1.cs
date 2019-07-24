@@ -25,7 +25,7 @@ namespace _1__DOF_Stabilisation_Remote
             
         }
 
-s
+
         
 
         private void Button_conexion_Click(object sender, EventArgs e)
@@ -77,7 +77,7 @@ s
 
         private void Button_on_Click(object sender, EventArgs e)
         {
-            send_msg(13, (int)numericUpDown_global_power.Value);
+            send_msg(1, (int)numericUpDown_global_power.Value);
         }
 
         private void send_msg(int indice, int value )
