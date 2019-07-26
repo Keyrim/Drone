@@ -8,7 +8,6 @@
 #include <Servo.h>
 #include<Kalman.h>
 const int MPU=0x68;  // I2C address of the MPU-6050
-const float max_total_vector = 1.2 ;
 bool global_state = false ;  //true means motor are on and false means motors are off
 
 Kalman kalman ;
@@ -150,12 +149,15 @@ void loop()
         if(read_serial())
         {
             if(data_indice == 0 )global_state = false ;
-            else if(data_indice == 13)
+            else if(data_indice == 1)
             {
                 global_power = data_value ;
-                set_angle_kalman();
                 global_state = true ;
             }
+            else if(data_indice == 2)kP = (float)(data_value/1000);
+            else if(data_indice == 3)kD = (float)(data_value/1000);
+            else if(data_indice == 4)kI = (float)(data_value/1000);
+
         }
     }
     if(global_state)
@@ -165,8 +167,15 @@ void loop()
         float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);    
         AcX = asin(AcX/total_vector)*57.32; //arcsin c'est en radian 
         AcY = asin(AcY/total_vector)*57.32;
+
+        //Must choose between those filters
+
         //Kalman filter aplication
         X = kalman.getAngle(AcY, GyX, 0.004);
+
+        //Complementary filter
+        X += GyX / frequence ; //angle par sec * sec = angle donc angle par sec / frequence = angle 
+        X = X * 0.98 + AcY * 0.02 ;
 
         error = consigne - X ;
         p = error * kP ;
