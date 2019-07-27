@@ -101,9 +101,11 @@ namespace _1__DOF_Stabilisation_Remote
 
         private void Button_send_pid_Click(object sender, EventArgs e)
         {
-            send_msg(2, (int)(numericUpDown_p.Value*1000));
-            send_msg(3, (int)(numericUpDown_p.Value*1000));
-            send_msg(4, (int)(numericUpDown_p.Value*1000));
+            send_msg(2, (int)(numericUpDown_p.Value * 1000));
+            send_msg(3, (int)(numericUpDown_i.Value * 1000));
+            send_msg(4, (int)(numericUpDown_d.Value * 1000));
+
+
         }
     }
 }

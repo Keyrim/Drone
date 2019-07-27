@@ -28,15 +28,15 @@ Servo left_esc ;
 unsigned int signal_esc1 = 1000, signal_esc2 = 1000 ;
 
 //Serial things
-int data_value =0;
-int data_indice = 0 ;
+unsigned long data_value =0;
+unsigned long data_indice = 0 ;
 String full_msg = "";
 
-//regulations thngs
+//regulations things
 float consigne = 0 ;
-const float kP = 1, kD = 1 , kI = 0.00;
+float kP = 0, kD = 0 , kI = 0.00;
 float error, last_error = 0 ;
-float p, i, d;
+int p, i, d;
 int global_power = 1100 ; 
 
 void set_angle_kalman()
@@ -56,12 +56,13 @@ bool read_serial()
         
         
         data_value = full_msg.toInt();
-        Serial.print(data_value);
-        Serial.print("\n");
+        data_value = abs(data_value);
         data_indice = data_value & 15;
         if(data_indice !=0)digitalWrite(13, HIGH);
         else digitalWrite(13, LOW);
         data_value = (data_value-data_indice)>>4; 
+        Serial.print(data_value);
+        Serial.print("\n");
        
         full_msg = "";
         return true;
@@ -154,9 +155,9 @@ void loop()
                 global_power = data_value ;
                 global_state = true ;
             }
-            else if(data_indice == 2)kP = (float)(data_value/1000);
-            else if(data_indice == 3)kD = (float)(data_value/1000);
-            else if(data_indice == 4)kI = (float)(data_value/1000);
+            else if(data_indice == 2)kP = (float)(data_value)/1000;
+            else if(data_indice == 3)kD = (float)(data_value)/1000;
+            else if(data_indice == 4)kI = (float)(data_value)/1000;
 
         }
     }
@@ -174,14 +175,14 @@ void loop()
         X = kalman.getAngle(AcY, GyX, 0.004);
 
         //Complementary filter
-        X += GyX / frequence ; //angle par sec * sec = angle donc angle par sec / frequence = angle 
-        X = X * 0.98 + AcY * 0.02 ;
+        //X += GyX / frequence ; //angle par sec * sec = angle donc angle par sec / frequence = angle 
+        //X = X * 0.98 + AcY * 0.02 ;
 
         error = consigne - X ;
         p = error * kP ;
         d = (error - last_error) * kD ;
         i += error * kI ;
-        Serial.print(X+90);           //+90 to get a positive value
+        Serial.print(d);           //+90 to get a positive value
         Serial.print("\n");
 
         /*if (X > 0)digitalWrite(13, HIGH);
@@ -198,7 +199,6 @@ void loop()
         right_esc.writeMicroseconds(1000);
     }
     
-
     //We regulate our frequence here
     while(micros()<loop_timer + 1000000/frequence);
     loop_timer = micros();
