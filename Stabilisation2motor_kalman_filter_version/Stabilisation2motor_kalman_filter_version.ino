@@ -46,14 +46,16 @@ void set_angle_kalman()
     float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);       
     AcY = asin(AcY/total_vector)*57.32;
     kalman.setAngle(AcY);
+    X + AcY ;
 }
 
 void write_serial(int indice, int value)
 {
     //Index 0 is for the angle
     //      1 for the p corection
-    //      2 for the I corection
-    //      3 for the d corection
+    //      3 for the I corection
+    //      5 for the d corection
+    
 
     int data = (value << 4 )+ indice ;
     Serial.print(data);
@@ -159,7 +161,13 @@ void loop()
     {
         if(read_serial())
         {
-            if(data_indice == 0 )global_state = false ;
+            if(data_indice == 0 )
+            {
+                global_state = false ;
+                p = 0;
+                i = 0;
+                d = 0 ;
+            }
             else if(data_indice == 1)
             {
                 global_power = data_value ;
@@ -168,6 +176,7 @@ void loop()
             else if(data_indice == 2)kP = (float)(data_value)/1000;
             else if(data_indice == 3)kI = (float)(data_value)/1000;
             else if(data_indice == 4)kD = (float)(data_value)/1000;
+            else if(data_indice == 5)consigne = data_value-90;
 
         }
     }
@@ -182,21 +191,28 @@ void loop()
         //Must choose between those filters
 
         //Kalman filter aplication
-        X = kalman.getAngle(AcY, GyX, 0.004);
+        //X = kalman.getAngle(AcY, GyX, 0.004);
 
         //Complementary filter
-        //X += GyX / frequence ; //angle par sec * sec = angle donc angle par sec / frequence = angle 
-        //X = X * 0.98 + AcY * 0.02 ;
+        X += GyX / frequence ; //angle par sec * sec = angle donc angle par sec / frequence = angle 
+        X = X * 0.995 + AcY * 0.005 ;
 
         //We send the angle to the aplication 
         write_serial(0, (int)(X+90));   
 
         error = consigne - X ;
         p = error * kP ;
-        d = (error - last_error) * kD ;
+        d = (error - last_error) * kD * 100 ;
         i += error * kI ;
 
-        write_serial(1, (int)abs(p));
+        if(p>=0)write_serial(1, (int)p);
+        else write_serial(2, (int)abs(p));
+        if(i>0)write_serial(3, (int)i);
+        else write_serial(4, (int)abs(i));
+        if(d>0)write_serial(5, (int)d);
+        else write_serial(6, (int)abs(d));
+
+        
 
         /*if (X > 0)digitalWrite(13, HIGH);
         else digitalWrite(13, LOW); */

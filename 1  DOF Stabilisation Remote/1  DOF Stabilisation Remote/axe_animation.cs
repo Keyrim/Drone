@@ -38,8 +38,13 @@ namespace _1__DOF_Stabilisation_Remote
             //draw the angle line 
             e.Graphics.DrawLine(pen, (float)Math.Cos(angle/180*Math.PI)*100+ pictureBox.Width / 2,
                 -(float)Math.Sin(angle / 180 * Math.PI) * 100 + pictureBox.Height / 2 , 
-                pictureBox.Width / 2, pictureBox.Height / 2);    
+                pictureBox.Width / 2, pictureBox.Height / 2);
             //Draw the p_value line 
+            e.Graphics.DrawLine(pen, 20, pictureBox.Height/2, 20, pictureBox.Height/2 - p_value);
+            //Draw the i_value line 
+            e.Graphics.DrawLine(pen, 40, pictureBox.Height / 2, 40, pictureBox.Height / 2 - i_value);
+            //Draw the d_value line 
+            e.Graphics.DrawLine(pen, 60, pictureBox.Height / 2, 60, pictureBox.Height / 2 - d_value);
         }
 
 

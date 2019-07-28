@@ -61,19 +61,18 @@ namespace _1__DOF_Stabilisation_Remote
                 });
                 //Index 0 is for the angle
                 //      1 for the p corection
-                //      2 for the I corection
-                //      3 for the d corection
-                if (indice == 0)
-                {
-                    axe.angle = -msg_number;
-                    axe.pictureBox.Invalidate();                    
-                }
-                else if(indice == 1)
-                {
-                    axe.p_value = msg_number;
-                    axe.pictureBox.Invalidate();
-                }
+                //      3 for the I corection
+                //      4 for the d corection
+                if (indice == 0)        axe.angle = -msg_number;      
+                else if (indice == 1)   axe.p_value = msg_number;
+                else if (indice == 2) axe.p_value = -msg_number;
+                else if (indice == 3) axe.i_value = msg_number;
+                else if (indice == 4) axe.i_value = -msg_number;
+                else if (indice == 5) axe.d_value = msg_number;
+                else if (indice == 6) axe.d_value = -msg_number;
                 
+
+
 
             }
 
@@ -98,6 +97,7 @@ namespace _1__DOF_Stabilisation_Remote
             //2 is for a p setting, the value sent is the p value times 1000
             //3 is for a i setting, the value sent is the i value times 1000
             //4 is for a d setting, the value sent is the d value times 1000
+            //5 is to change the consigne value
             int valeur = value << 4;
             valeur += indice;
 
@@ -116,6 +116,16 @@ namespace _1__DOF_Stabilisation_Remote
             send_msg(4, (int)(numericUpDown_d.Value * 1000));
 
 
+        }
+
+        private void Timer_frequence_Tick(object sender, EventArgs e)
+        {
+            axe.pictureBox.Invalidate();
+        }
+
+        private void NumericUpDown_consigne_ValueChanged(object sender, EventArgs e)
+        {
+            send_msg(5, (int)numericUpDown_consigne.Value);
         }
     }
 }

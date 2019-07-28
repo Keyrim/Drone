@@ -44,12 +44,15 @@
             this.label_global_powe_setting = new System.Windows.Forms.Label();
             this.numericUpDown_global_power = new System.Windows.Forms.NumericUpDown();
             this.button_send_pid = new System.Windows.Forms.Button();
-            this.progressBar_p_corection = new System.Windows.Forms.ProgressBar();
+            this.timer_frequence = new System.Windows.Forms.Timer(this.components);
+            this.label_consigne = new System.Windows.Forms.Label();
+            this.numericUpDown_consigne = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_arduino_port)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_p)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_d)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_i)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_global_power)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_consigne)).BeginInit();
             this.SuspendLayout();
             // 
             // arduino
@@ -237,21 +240,56 @@
             this.button_send_pid.UseVisualStyleBackColor = true;
             this.button_send_pid.Click += new System.EventHandler(this.Button_send_pid_Click);
             // 
-            // progressBar_p_corection
+            // timer_frequence
             // 
-            this.progressBar_p_corection.ForeColor = System.Drawing.SystemColors.ActiveBorder;
-            this.progressBar_p_corection.Location = new System.Drawing.Point(592, 132);
-            this.progressBar_p_corection.Name = "progressBar_p_corection";
-            this.progressBar_p_corection.Size = new System.Drawing.Size(100, 23);
-            this.progressBar_p_corection.TabIndex = 16;
-            this.progressBar_p_corection.Value = 50;
+            this.timer_frequence.Enabled = true;
+            this.timer_frequence.Interval = 16;
+            this.timer_frequence.Tick += new System.EventHandler(this.Timer_frequence_Tick);
+            // 
+            // label_consigne
+            // 
+            this.label_consigne.AutoSize = true;
+            this.label_consigne.Location = new System.Drawing.Point(394, 34);
+            this.label_consigne.Name = "label_consigne";
+            this.label_consigne.Size = new System.Drawing.Size(51, 13);
+            this.label_consigne.TabIndex = 16;
+            this.label_consigne.Text = "Consigne";
+            // 
+            // numericUpDown_consigne
+            // 
+            this.numericUpDown_consigne.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown_consigne.Location = new System.Drawing.Point(397, 61);
+            this.numericUpDown_consigne.Maximum = new decimal(new int[] {
+            160,
+            0,
+            0,
+            0});
+            this.numericUpDown_consigne.Minimum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.numericUpDown_consigne.Name = "numericUpDown_consigne";
+            this.numericUpDown_consigne.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown_consigne.TabIndex = 17;
+            this.numericUpDown_consigne.Value = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.numericUpDown_consigne.ValueChanged += new System.EventHandler(this.NumericUpDown_consigne_ValueChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 461);
-            this.Controls.Add(this.progressBar_p_corection);
+            this.Controls.Add(this.numericUpDown_consigne);
+            this.Controls.Add(this.label_consigne);
             this.Controls.Add(this.button_send_pid);
             this.Controls.Add(this.numericUpDown_global_power);
             this.Controls.Add(this.label_global_powe_setting);
@@ -274,6 +312,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_d)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_i)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_global_power)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_consigne)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -295,7 +334,9 @@
         private System.Windows.Forms.Label label_global_powe_setting;
         private System.Windows.Forms.NumericUpDown numericUpDown_global_power;
         private System.Windows.Forms.Button button_send_pid;
-        private System.Windows.Forms.ProgressBar progressBar_p_corection;
+        private System.Windows.Forms.Timer timer_frequence;
+        private System.Windows.Forms.Label label_consigne;
+        private System.Windows.Forms.NumericUpDown numericUpDown_consigne;
     }
 }
 
