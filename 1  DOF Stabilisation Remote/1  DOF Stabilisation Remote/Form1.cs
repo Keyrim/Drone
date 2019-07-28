@@ -70,7 +70,8 @@ namespace _1__DOF_Stabilisation_Remote
                 }
                 else if(indice == 1)
                 {
-                    progressBar_p_corection.Invoke((MethodInvoker)delegate { progressBar_p_corection.Value = msg_number;  });
+                    axe.p_value = msg_number;
+                    axe.pictureBox.Invalidate();
                 }
                 
 
