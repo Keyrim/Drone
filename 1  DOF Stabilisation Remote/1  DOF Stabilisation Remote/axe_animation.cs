@@ -11,7 +11,7 @@ namespace _1__DOF_Stabilisation_Remote
     class Axe_animation
     {
         public double angle = 0;
-        int p_value, i_value, d_value;
+        public int p_value, i_value, d_value;
         public PictureBox pictureBox = new PictureBox();
         public Pen pen = new Pen(Brushes.Black);
 
