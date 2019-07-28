@@ -11,6 +11,7 @@ namespace _1__DOF_Stabilisation_Remote
     class Axe_animation
     {
         public double angle = 0;
+        int p_value, i_value, d_value;
         public PictureBox pictureBox = new PictureBox();
         public Pen pen = new Pen(Brushes.Black);
 
@@ -34,9 +35,11 @@ namespace _1__DOF_Stabilisation_Remote
 
         private void picture_box_paint(object sender, PaintEventArgs e)
         {
+            //draw the angle line 
             e.Graphics.DrawLine(pen, (float)Math.Cos(angle/180*Math.PI)*100+ pictureBox.Width / 2,
                 -(float)Math.Sin(angle / 180 * Math.PI) * 100 + pictureBox.Height / 2 , 
-                pictureBox.Width / 2, pictureBox.Height / 2);          
+                pictureBox.Width / 2, pictureBox.Height / 2);    
+            //Draw the p_value line 
         }
 
 

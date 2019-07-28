@@ -44,6 +44,7 @@
             this.label_global_powe_setting = new System.Windows.Forms.Label();
             this.numericUpDown_global_power = new System.Windows.Forms.NumericUpDown();
             this.button_send_pid = new System.Windows.Forms.Button();
+            this.progressBar_p_corection = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_arduino_port)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_p)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_d)).BeginInit();
@@ -110,6 +111,11 @@
             // numericUpDown_p
             // 
             this.numericUpDown_p.DecimalPlaces = 3;
+            this.numericUpDown_p.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.numericUpDown_p.Location = new System.Drawing.Point(592, 45);
             this.numericUpDown_p.Maximum = new decimal(new int[] {
             10,
@@ -123,6 +129,11 @@
             // numericUpDown_d
             // 
             this.numericUpDown_d.DecimalPlaces = 3;
+            this.numericUpDown_d.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.numericUpDown_d.Location = new System.Drawing.Point(720, 45);
             this.numericUpDown_d.Maximum = new decimal(new int[] {
             10,
@@ -136,6 +147,11 @@
             // numericUpDown_i
             // 
             this.numericUpDown_i.DecimalPlaces = 3;
+            this.numericUpDown_i.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.numericUpDown_i.Location = new System.Drawing.Point(656, 45);
             this.numericUpDown_i.Maximum = new decimal(new int[] {
             10,
@@ -221,11 +237,21 @@
             this.button_send_pid.UseVisualStyleBackColor = true;
             this.button_send_pid.Click += new System.EventHandler(this.Button_send_pid_Click);
             // 
+            // progressBar_p_corection
+            // 
+            this.progressBar_p_corection.ForeColor = System.Drawing.SystemColors.ActiveBorder;
+            this.progressBar_p_corection.Location = new System.Drawing.Point(592, 132);
+            this.progressBar_p_corection.Name = "progressBar_p_corection";
+            this.progressBar_p_corection.Size = new System.Drawing.Size(100, 23);
+            this.progressBar_p_corection.TabIndex = 16;
+            this.progressBar_p_corection.Value = 50;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 461);
+            this.Controls.Add(this.progressBar_p_corection);
             this.Controls.Add(this.button_send_pid);
             this.Controls.Add(this.numericUpDown_global_power);
             this.Controls.Add(this.label_global_powe_setting);
@@ -269,6 +295,7 @@
         private System.Windows.Forms.Label label_global_powe_setting;
         private System.Windows.Forms.NumericUpDown numericUpDown_global_power;
         private System.Windows.Forms.Button button_send_pid;
+        private System.Windows.Forms.ProgressBar progressBar_p_corection;
     }
 }
 

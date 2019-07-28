@@ -34,7 +34,7 @@ String full_msg = "";
 
 //regulations things
 float consigne = 0 ;
-float kP = 0, kD = 0 , kI = 0.00;
+float kP = 0, kD = 0 , kI = 0;
 float error, last_error = 0 ;
 int p, i, d;
 int global_power = 1100 ; 
@@ -46,6 +46,18 @@ void set_angle_kalman()
     float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);       
     AcY = asin(AcY/total_vector)*57.32;
     kalman.setAngle(AcY);
+}
+
+void write_serial(int indice, int value)
+{
+    //Index 0 is for the angle
+    //      1 for the p corection
+    //      2 for the I corection
+    //      3 for the d corection
+
+    int data = (value << 4 )+ indice ;
+    Serial.print(data);
+    Serial.print('\n');
 }
 
 bool read_serial()
@@ -61,8 +73,6 @@ bool read_serial()
         if(data_indice !=0)digitalWrite(13, HIGH);
         else digitalWrite(13, LOW);
         data_value = (data_value-data_indice)>>4; 
-        Serial.print(data_value);
-        Serial.print("\n");
        
         full_msg = "";
         return true;
@@ -156,8 +166,8 @@ void loop()
                 global_state = true ;
             }
             else if(data_indice == 2)kP = (float)(data_value)/1000;
-            else if(data_indice == 3)kD = (float)(data_value)/1000;
-            else if(data_indice == 4)kI = (float)(data_value)/1000;
+            else if(data_indice == 3)kI = (float)(data_value)/1000;
+            else if(data_indice == 4)kD = (float)(data_value)/1000;
 
         }
     }
@@ -178,12 +188,15 @@ void loop()
         //X += GyX / frequence ; //angle par sec * sec = angle donc angle par sec / frequence = angle 
         //X = X * 0.98 + AcY * 0.02 ;
 
+        //We send the angle to the aplication 
+        write_serial(0, (int)(X+90));   
+
         error = consigne - X ;
         p = error * kP ;
         d = (error - last_error) * kD ;
         i += error * kI ;
-        Serial.print(d);           //+90 to get a positive value
-        Serial.print("\n");
+
+        write_serial(1, (int)abs(p));
 
         /*if (X > 0)digitalWrite(13, HIGH);
         else digitalWrite(13, LOW); */

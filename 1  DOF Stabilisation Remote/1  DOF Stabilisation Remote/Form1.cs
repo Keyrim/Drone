@@ -13,14 +13,14 @@ namespace _1__DOF_Stabilisation_Remote
 {
     public partial class Form1 : Form
     {
-        Axe_animation axe = new Axe_animation(300, 200);
+        Axe_animation axe = new Axe_animation(400, 200);
         
 
         
         public Form1()
         {
             InitializeComponent();
-            axe.set_window(this.Width/2 -150, this.Height/2-100);
+            axe.set_window(this.Width/2 -200, this.Height/2-100);
             this.Controls.Add(axe.pictureBox);     
             
         }
@@ -51,22 +51,31 @@ namespace _1__DOF_Stabilisation_Remote
         {
             while (arduino.BytesToRead > 0)
             {
-                string message = arduino.ReadLine();        
-                
-                message = message.Replace(".", ",");
-                try
-                {
-                    axe.angle =-1* Convert.ToDouble(message);
-                }
-                catch { }
+                string message = arduino.ReadLine();
+                int msg_number = Convert.ToInt32(message);
+                int indice = msg_number & 15;
+                msg_number = (msg_number - indice) >> 4;
                 textBox_informations.Invoke((MethodInvoker)delegate
                 {
-                    textBox_informations.Text = axe.angle.ToString();                    
+                    textBox_informations.Text = indice.ToString() + "\t" +  msg_number.ToString();
                 });
-                axe.pictureBox.Invalidate();
+                //Index 0 is for the angle
+                //      1 for the p corection
+                //      2 for the I corection
+                //      3 for the d corection
+                if (indice == 0)
+                {
+                    axe.angle = -msg_number;
+                    axe.pictureBox.Invalidate();                    
+                }
+                else if(indice == 1)
+                {
+                    progressBar_p_corection.Invoke((MethodInvoker)delegate { progressBar_p_corection.Value = msg_number;  });
+                }
+                
 
             }
-            
+
 
         }
 
