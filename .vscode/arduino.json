@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
     "port": "COM6",
-    "sketch": "Stabilisation2motor_kalman_filter_version\\Stabilisation2motor_kalman_filter_version.ino"
+    "sketch": "acc_att\\acc_att.ino"
 }
