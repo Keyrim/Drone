@@ -12,10 +12,18 @@ namespace Acc_Atenuation
 {
     public partial class Form1 : Form
     {
+        Queue<int> points = new Queue<int>();
+        const int queue_shape = 140;
+        decimal space;
+        Pen pen = new Pen(Color.Black);
+
+
         public Form1()
         {
             InitializeComponent();
             this.KeyPreview = true;
+            space = (decimal)pictureBox_angle.Width / (decimal)queue_shape;
+            pen.Width = 3;
         }
 
         private void SerialPort_Arduino_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -27,9 +35,12 @@ namespace Acc_Atenuation
                 number -= id;
                 number = number >> 4;
 
-                if (id == 0) numericUpDown_angle.Invoke((MethodInvoker)
-                    delegate { numericUpDown_angle.Value = (decimal)number / (decimal)1000; });
-
+                if (id == 0)
+                {
+                    numericUpDown_angle.Invoke((MethodInvoker)delegate { numericUpDown_angle.Value = (decimal)number / (decimal)1000; });
+                    add_angle_to_draw(number / 1000);
+                    pictureBox_angle.Invalidate();
+                }
 
 
 
@@ -69,7 +80,15 @@ namespace Acc_Atenuation
             }
         }
 
-        
+        private void add_angle_to_draw(int angle_to_add)
+        {
+            if (points.Count() >= queue_shape)
+            {
+                points.Dequeue();
+                points.Enqueue(angle_to_add);
+            }
+            else points.Enqueue(angle_to_add);
+        }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -85,8 +104,15 @@ namespace Acc_Atenuation
             if (chr == "F") write_arduino(0, 3);
             if (chr == "A") write_arduino(0, 0);
             if (chr == "L") write_arduino(0, 2);
+            if (chr == " ") write_arduino(1, 1000);
         }
 
-
+        private void PictureBox_angle_Paint(object sender, PaintEventArgs e)
+        {
+            if(points.Count() > 1)
+                for (int i = 1; i < points.Count()-1; i++)            
+                    e.Graphics.DrawLine(pen, (int)(i*space-space), points.ToArray()[i-1], (int)(i*space), points.ToArray()[i]);
+            
+        }
     }
 }

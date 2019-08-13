@@ -40,9 +40,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label_loop_timer = new System.Windows.Forms.Label();
             this.numericUpDown_loop_timer = new System.Windows.Forms.NumericUpDown();
+            this.pictureBox_angle = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_global_value)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_loop_timer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_angle)).BeginInit();
             this.SuspendLayout();
             // 
             // label_short_cut_list
@@ -164,11 +166,21 @@
             this.numericUpDown_loop_timer.TabIndex = 8;
             this.numericUpDown_loop_timer.ValueChanged += new System.EventHandler(this.NumericUpDown_loop_timer_ValueChanged);
             // 
+            // pictureBox_angle
+            // 
+            this.pictureBox_angle.Location = new System.Drawing.Point(48, 235);
+            this.pictureBox_angle.Name = "pictureBox_angle";
+            this.pictureBox_angle.Size = new System.Drawing.Size(700, 180);
+            this.pictureBox_angle.TabIndex = 9;
+            this.pictureBox_angle.TabStop = false;
+            this.pictureBox_angle.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_angle_Paint);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pictureBox_angle);
             this.Controls.Add(this.numericUpDown_loop_timer);
             this.Controls.Add(this.label_loop_timer);
             this.Controls.Add(this.label1);
@@ -184,6 +196,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_global_value)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_angle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_loop_timer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_angle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,6 +214,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label_loop_timer;
         private System.Windows.Forms.NumericUpDown numericUpDown_loop_timer;
+        private System.Windows.Forms.PictureBox pictureBox_angle;
     }
 }
 

@@ -40,8 +40,10 @@ unsigned long previoous_loop_timer =0 ;
 //Motor part
 #include<Servo.h>
 #define pin_moteur 7
+#define pin_moteur2 5
 Servo moteur;
-int global_power = 1100 ; 
+Servo moteur2 ;
+int global_power = 1000 ; 
 
 //MPU6050 part
 #include<Wire.h>
@@ -93,10 +95,12 @@ void setup()
 {
     //Phase d'Initalisation de la liaison série ainsi que des moteurs
     moteur.attach(pin_moteur);
+    moteur2.attach(pin_moteur2);
     Serial.begin(9600);
     //Serial.println("-Debut du programme-");
     //Serial.print("-Initalisation moteur ");
     moteur.writeMicroseconds(1000);
+    moteur2.writeMicroseconds(1000);
     //for(int i =0; i <30; i++)Serial.print(".");
     //Serial.println(".");
     //Serial.println("Les moteus sont prets-");
@@ -204,7 +208,8 @@ void loop()
 
 
     if (affichage_X)write_serial(0, (long)((90+X)*1000));
-    
+    moteur.writeMicroseconds(global_power);
+    moteur2.writeMicroseconds(global_power);
 
 
     
