@@ -29,7 +29,7 @@ void write_serial(long sId, long sValue)
 {
     sValue = sValue <<4 ;
     sValue += sId ;
-    Serial.pritn(sValue):
+    Serial.print(sValue);
     Serial.print("\n");
 }
 
@@ -80,9 +80,10 @@ void read_mpu()
 
 
 //Partie gestion global
-bool affichage_X = true;
+bool affichage_X = false;
 bool moyenne = false ;
 bool affichage_period_loop = false ;
+bool low_pass_filter = false ;
 
 
 
@@ -93,12 +94,12 @@ void setup()
     //Phase d'Initalisation de la liaison série ainsi que des moteurs
     moteur.attach(pin_moteur);
     Serial.begin(9600);
-    Serial.println("-Debut du programme-");
-    Serial.print("-Initalisation moteur ");$
-    Servo.writeMicroseconds(1000);
-    for(int i =0; i <30; i++)Serial.print(".");
-    Serial.println(".");
-    Serial.println("Les moteus sont prets-");
+    //Serial.println("-Debut du programme-");
+    //Serial.print("-Initalisation moteur ");
+    moteur.writeMicroseconds(1000);
+    //for(int i =0; i <30; i++)Serial.print(".");
+    //Serial.println(".");
+    //Serial.println("Les moteus sont prets-");
     //Initalisation du MPU
     // Wake up the mpu 
     Wire.begin();
@@ -122,7 +123,7 @@ void setup()
     Wire.write(0x1B);
     Wire.write(0X08);
     Wire.endTransmission();    
-    Serial.println("-Mpu initialisé-");
+    //Serial.println("-Mpu initialisé-");
 
 
 
@@ -130,7 +131,7 @@ void setup()
 void loop()
 {
     //Si des données sont present dans le tampon
-    if(Serial.available)
+    if(Serial.available())
     {
         //Si des données sont utilisables
         if(read_serial())
@@ -138,12 +139,10 @@ void loop()
             if(id == 0)
             {
                 //Gestion des boolean globales
-                if     (value == 0)affichage_X = true ;
-                else if(value == 1)affichage_X = false ;
-                else if(value == 2)moyenne = true ;
-                else if(value == 3)moyenne = false ;
-                else if(value == 4)affichage_period_loop = true ;
-                else if(value == 5)affichage_period_loop = false ;
+                if     (value == 0)affichage_X = !affichage_X ;
+                else if(value == 1)moyenne = !moyenne ;
+                else if(value == 2)affichage_period_loop = !affichage_period_loop ;
+                else if(value == 3)low_pass_filter = !low_pass_filter;
 
             }
             //Permet de controller lapuissance du des moteurs, les faires tourner ou non
@@ -155,7 +154,8 @@ void loop()
     if(affichage_period_loop)write_serial(1, micros()-previoous_loop_timer);
 
     //On garde une periode constante sur la lecture du MPU
-    while(micros()<previoous_loop_timer + (1000000/frequence);
+    
+    while(micros()<previoous_loop_timer + (1000000/frequence));
 
     previoous_loop_timer = micros();
     if(moyenne)
@@ -163,7 +163,7 @@ void loop()
         AcX = 0;
         AcY = 0;
         AcZ = 0 ;
-        for(int i = 0; i < moyenne_iteration, i++)
+        for(int i = 0; i < moyenne_iteration; i++)
         {
             Wire.beginTransmission(MPU);
             Wire.write(0x3B);       //Send the starting register (accelerometer)
@@ -204,6 +204,7 @@ void loop()
 
 
     if (affichage_X)write_serial(0, (long)((90+X)*1000));
+    
 
 
     

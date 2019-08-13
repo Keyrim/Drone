@@ -1,0 +1,10 @@
+D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\bin\Debug\Acc_Atenuation.exe.config
+D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\bin\Debug\Acc_Atenuation.exe
+D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\bin\Debug\Acc_Atenuation.pdb
+D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.csprojAssemblyReference.cache
+D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.Form1.resources
+D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.Properties.Resources.resources
+D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.csproj.GenerateResource.cache
+D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.csproj.CoreCompileInputs.cache
+D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.exe
+D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.pdb
