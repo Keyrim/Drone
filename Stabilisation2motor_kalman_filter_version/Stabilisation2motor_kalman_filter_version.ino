@@ -195,7 +195,7 @@ void loop()
 
         //Complementary filter
         X += GyX / frequence ; //angle par sec * sec = angle donc angle par sec / frequence = angle 
-        X = X * 0.995 + AcY * 0.005 ;
+        X = X * 0.996 + AcY * 0.004 ;
 
         //We send the angle to the aplication 
         write_serial(0, (int)(X+90));   
