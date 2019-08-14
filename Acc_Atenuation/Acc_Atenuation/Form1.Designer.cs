@@ -68,6 +68,7 @@
             // 
             // serialPort_Arduino
             // 
+            this.serialPort_Arduino.BaudRate = 115200;
             this.serialPort_Arduino.PortName = "COM6";
             this.serialPort_Arduino.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialPort_Arduino_DataReceived);
             // 

@@ -96,7 +96,7 @@ void setup()
     //Phase d'Initalisation de la liaison série ainsi que des moteurs
     moteur.attach(pin_moteur);
     moteur2.attach(pin_moteur2);
-    Serial.begin(9600);
+    Serial.begin(115200);
     //Serial.println("-Debut du programme-");
     //Serial.print("-Initalisation moteur ");
     moteur.writeMicroseconds(1000);

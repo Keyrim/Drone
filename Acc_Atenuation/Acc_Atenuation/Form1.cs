@@ -41,6 +41,7 @@ namespace Acc_Atenuation
                     add_angle_to_draw(number / 1000);
                     pictureBox_angle.Invalidate();
                 }
+                else if (id == 1) numericUpDown_loop_timer.Invoke((MethodInvoker)delegate { numericUpDown_loop_timer.Value = (decimal)number; });
 
 
 
