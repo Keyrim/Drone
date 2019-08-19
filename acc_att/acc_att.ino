@@ -65,18 +65,17 @@ void read_mpu()
     AcZ = Wire.read()<<8|Wire.read();
 
     //Get the true raws values in g according to our setting
-    AcZ /= 8192;
-    AcX /= 8192;
-    AcY /= 8192;
-    
-    Wire.beginTransmission(MPU);
-    Wire.write(0x43);
-    Wire.endTransmission();
-    Wire.requestFrom(MPU, 4);
-    while(Wire.available()< 4);
-    GyX = (Wire.read()<<8|Wire.read())/65.5;
-    GyY = (Wire.read()<<8|Wire.read())/65.5;    
+    AcZ /= 4096;
+    AcX /= 4096;
+    AcY /= 4096;
+}
 
+void set_angle()
+{
+    read_mpu();
+    float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);       
+    AcY = asin(AcY/total_vector)*57.32;
+    X = AcY ;
 }
 
 
@@ -86,6 +85,7 @@ bool affichage_X = false;
 bool moyenne = false ;
 bool affichage_period_loop = false ;
 bool low_pass_filter = false ;
+bool complementary_filter = true ;
 
 
 
@@ -96,7 +96,7 @@ void setup()
     //Phase d'Initalisation de la liaison série ainsi que des moteurs
     moteur.attach(pin_moteur);
     moteur2.attach(pin_moteur2);
-    Serial.begin(115200);
+    Serial.begin(9600);
     //Serial.println("-Debut du programme-");
     //Serial.print("-Initalisation moteur ");
     moteur.writeMicroseconds(1000);
@@ -113,11 +113,11 @@ void setup()
     Wire.endTransmission();
 
     //Set up the accelerometer
-    //1g = 8192
-    //+- 2g
+    //1g = 4096
+    //+- 8g
     Wire.beginTransmission(MPU);
     Wire.write(0x1C);
-    Wire.write(0x08);
+    Wire.write(0x10);
     Wire.endTransmission();
 
     //Set up the gyroscope
@@ -144,9 +144,14 @@ void loop()
             {
                 //Gestion des boolean globales
                 if     (value == 0)affichage_X = !affichage_X ;
-                else if(value == 1)moyenne = !moyenne ;
+                //else if(value == 1)moyenne = !moyenne ;
                 else if(value == 2)affichage_period_loop = !affichage_period_loop ;
                 else if(value == 3)low_pass_filter = !low_pass_filter;
+                else if(value == 4)
+                {
+                    complementary_filter = !complementary_filter;
+                    if(complementary_filter)set_angle();
+                }
 
             }
             //Permet de controller lapuissance du des moteurs, les faires tourner ou non
@@ -179,33 +184,32 @@ void loop()
             AcZ += Wire.read()<<8|Wire.read();           
         }
         //Get the true raws values in g according to our setting
-        AcZ /= 8192;
-        AcX /= 8192;
-        AcY /= 8192;
+        AcZ /= 4096;
+        AcX /= 4096;
+        AcY /= 4096;
         //On oublie pas de faire la moyenne sinon ca serait pas de chance^^
         AcZ /= moyenne_iteration;
         AcX /= moyenne_iteration;
         AcY /= moyenne_iteration;
     }
-    else 
+    else read_mpu();
+    
+    
+    float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);    
+    AcX = asin(AcY/total_vector)*57.32;
+    if(complementary_filter)
     {
         Wire.beginTransmission(MPU);
-        Wire.write(0x3B);       //Send the starting register (accelerometer)
+        Wire.write(0x43);
         Wire.endTransmission();
-        Wire.requestFrom(MPU, 6);
-        while (Wire.available()< 6);
-        AcX = Wire.read()<<8|Wire.read();
-        AcY = Wire.read()<<8|Wire.read();
-        AcZ = Wire.read()<<8|Wire.read();
-
-        //Get the true raws values in g according to our setting
-        AcZ /= 8192;
-        AcX /= 8192;
-        AcY /= 8192;
+        Wire.requestFrom(MPU, 4);
+        while(Wire.available()< 4);
+        GyX = (Wire.read()<<8|Wire.read())/65.5;
+        GyY = (Wire.read()<<8|Wire.read())/65.5;
+        X += GyX / frequence ;
+        X = X *0.996 + AcX * 0.004 ;        
     }
-    float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);    
-    X = asin(AcY/total_vector)*57.32;
-
+    else X = AcX ;
 
     if (affichage_X)write_serial(0, (long)((90+X)*1000));
     moteur.writeMicroseconds(global_power);

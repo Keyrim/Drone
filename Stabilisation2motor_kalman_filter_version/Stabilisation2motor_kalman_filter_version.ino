@@ -46,7 +46,7 @@ void set_angle_kalman()
     float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);       
     AcY = asin(AcY/total_vector)*57.32;
     kalman.setAngle(AcY);
-    X + AcY ;
+    X = AcY ;
 }
 
 void write_serial(int indice, int value)
@@ -130,7 +130,7 @@ void setup()
 
     //Set up the accelerometer
     //1g = 8192
-    //+- 2g
+    //+- 4g
     Wire.beginTransmission(MPU);
     Wire.write(0x1C);
     Wire.write(0x08);

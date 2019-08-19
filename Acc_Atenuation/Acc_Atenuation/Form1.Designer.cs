@@ -41,6 +41,12 @@
             this.label_loop_timer = new System.Windows.Forms.Label();
             this.numericUpDown_loop_timer = new System.Windows.Forms.NumericUpDown();
             this.pictureBox_angle = new System.Windows.Forms.PictureBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button_conexion = new System.Windows.Forms.Button();
+            this.button_motor_run = new System.Windows.Forms.Button();
+            this.button_loop_timer = new System.Windows.Forms.Button();
+            this.button_angle = new System.Windows.Forms.Button();
+            this.button_complementary_filter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_global_value)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_loop_timer)).BeginInit();
@@ -52,7 +58,7 @@
             this.label_short_cut_list.AutoSize = true;
             this.label_short_cut_list.Location = new System.Drawing.Point(12, 73);
             this.label_short_cut_list.Name = "label_short_cut_list";
-            this.label_short_cut_list.Size = new System.Drawing.Size(243, 104);
+            this.label_short_cut_list.Size = new System.Drawing.Size(243, 117);
             this.label_short_cut_list.TabIndex = 0;
             this.label_short_cut_list.Text = resources.GetString("label_short_cut_list.Text");
             // 
@@ -68,8 +74,7 @@
             // 
             // serialPort_Arduino
             // 
-            this.serialPort_Arduino.BaudRate = 115200;
-            this.serialPort_Arduino.PortName = "COM6";
+            this.serialPort_Arduino.PortName = "COM8";
             this.serialPort_Arduino.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialPort_Arduino_DataReceived);
             // 
             // label_global_power
@@ -176,11 +181,72 @@
             this.pictureBox_angle.TabStop = false;
             this.pictureBox_angle.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_angle_Paint);
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 20;
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            // 
+            // button_conexion
+            // 
+            this.button_conexion.Location = new System.Drawing.Point(637, 32);
+            this.button_conexion.Name = "button_conexion";
+            this.button_conexion.Size = new System.Drawing.Size(75, 23);
+            this.button_conexion.TabIndex = 10;
+            this.button_conexion.Text = "Conexion";
+            this.button_conexion.UseVisualStyleBackColor = true;
+            this.button_conexion.Click += new System.EventHandler(this.Button_conexion_Click);
+            // 
+            // button_motor_run
+            // 
+            this.button_motor_run.Location = new System.Drawing.Point(637, 62);
+            this.button_motor_run.Name = "button_motor_run";
+            this.button_motor_run.Size = new System.Drawing.Size(75, 23);
+            this.button_motor_run.TabIndex = 11;
+            this.button_motor_run.Text = "Run motors";
+            this.button_motor_run.UseVisualStyleBackColor = true;
+            this.button_motor_run.Click += new System.EventHandler(this.Button_motor_run_Click);
+            // 
+            // button_loop_timer
+            // 
+            this.button_loop_timer.Location = new System.Drawing.Point(637, 92);
+            this.button_loop_timer.Name = "button_loop_timer";
+            this.button_loop_timer.Size = new System.Drawing.Size(75, 23);
+            this.button_loop_timer.TabIndex = 12;
+            this.button_loop_timer.Text = "Loop timer";
+            this.button_loop_timer.UseVisualStyleBackColor = true;
+            this.button_loop_timer.Click += new System.EventHandler(this.Button_loop_timer_Click);
+            // 
+            // button_angle
+            // 
+            this.button_angle.Location = new System.Drawing.Point(637, 122);
+            this.button_angle.Name = "button_angle";
+            this.button_angle.Size = new System.Drawing.Size(75, 23);
+            this.button_angle.TabIndex = 13;
+            this.button_angle.Text = "Angle";
+            this.button_angle.UseVisualStyleBackColor = true;
+            this.button_angle.Click += new System.EventHandler(this.Button_angle_Click);
+            // 
+            // button_complementary_filter
+            // 
+            this.button_complementary_filter.Location = new System.Drawing.Point(637, 151);
+            this.button_complementary_filter.Name = "button_complementary_filter";
+            this.button_complementary_filter.Size = new System.Drawing.Size(128, 23);
+            this.button_complementary_filter.TabIndex = 14;
+            this.button_complementary_filter.Text = "Complementary filter";
+            this.button_complementary_filter.UseVisualStyleBackColor = true;
+            this.button_complementary_filter.Click += new System.EventHandler(this.Button_complementary_filter_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button_complementary_filter);
+            this.Controls.Add(this.button_angle);
+            this.Controls.Add(this.button_loop_timer);
+            this.Controls.Add(this.button_motor_run);
+            this.Controls.Add(this.button_conexion);
             this.Controls.Add(this.pictureBox_angle);
             this.Controls.Add(this.numericUpDown_loop_timer);
             this.Controls.Add(this.label_loop_timer);
@@ -216,6 +282,12 @@
         private System.Windows.Forms.Label label_loop_timer;
         private System.Windows.Forms.NumericUpDown numericUpDown_loop_timer;
         private System.Windows.Forms.PictureBox pictureBox_angle;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button_conexion;
+        private System.Windows.Forms.Button button_motor_run;
+        private System.Windows.Forms.Button button_loop_timer;
+        private System.Windows.Forms.Button button_angle;
+        private System.Windows.Forms.Button button_complementary_filter;
     }
 }
 

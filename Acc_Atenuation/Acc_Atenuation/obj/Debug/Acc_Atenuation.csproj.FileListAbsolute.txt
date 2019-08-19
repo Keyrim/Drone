@@ -8,3 +8,13 @@ D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.csproj.G
 D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.csproj.CoreCompileInputs.cache
 D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.exe
 D:\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.pdb
+C:\Users\Theo\Documents\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\bin\Debug\Acc_Atenuation.exe.config
+C:\Users\Theo\Documents\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\bin\Debug\Acc_Atenuation.exe
+C:\Users\Theo\Documents\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\bin\Debug\Acc_Atenuation.pdb
+C:\Users\Theo\Documents\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.csprojAssemblyReference.cache
+C:\Users\Theo\Documents\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.Form1.resources
+C:\Users\Theo\Documents\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.Properties.Resources.resources
+C:\Users\Theo\Documents\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.csproj.GenerateResource.cache
+C:\Users\Theo\Documents\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.csproj.CoreCompileInputs.cache
+C:\Users\Theo\Documents\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.exe
+C:\Users\Theo\Documents\Git Hub\Drone\Acc_Atenuation\Acc_Atenuation\obj\Debug\Acc_Atenuation.pdb

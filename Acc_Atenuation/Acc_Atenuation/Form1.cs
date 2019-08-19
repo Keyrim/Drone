@@ -39,7 +39,7 @@ namespace Acc_Atenuation
                 {
                     numericUpDown_angle.Invoke((MethodInvoker)delegate { numericUpDown_angle.Value = (decimal)number / (decimal)1000; });
                     add_angle_to_draw(number / 1000);
-                    pictureBox_angle.Invalidate();
+                    
                 }
                 else if (id == 1) numericUpDown_loop_timer.Invoke((MethodInvoker)delegate { numericUpDown_loop_timer.Value = (decimal)number; });
 
@@ -94,11 +94,7 @@ namespace Acc_Atenuation
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             string chr = e.KeyChar.ToString();
-            if (chr == "O")
-            {
-                open_arduino();
-                label1.Text = "Open";
-            }
+            if (chr == "O")open_arduino();           
             if (chr == "S") if (serialPort_Arduino.IsOpen) serialPort_Arduino.Close();
             if (chr == "G") write_arduino(1, (int)numericUpDown_global_value.Value);
             if (chr == "M") write_arduino(0, 1);
@@ -114,6 +110,33 @@ namespace Acc_Atenuation
                 for (int i = 1; i < points.Count()-1; i++)            
                     e.Graphics.DrawLine(pen, (int)(i*space-space), points.ToArray()[i-1], (int)(i*space), points.ToArray()[i]);
             
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            pictureBox_angle.Invalidate();
+        }
+
+        //Buttons that change boolen value as the keyboard control 
+        private void Button_conexion_Click(object sender, EventArgs e)
+        {
+            open_arduino();
+        }
+        private void Button_motor_run_Click(object sender, EventArgs e)
+        {
+            write_arduino(1, (int)numericUpDown_global_value.Value);
+        }
+        private void Button_loop_timer_Click(object sender, EventArgs e)
+        {
+            write_arduino(0, 2);
+        }
+        private void Button_angle_Click(object sender, EventArgs e)
+        {
+            write_arduino(0, 0);
+        }
+        private void Button_complementary_filter_Click(object sender, EventArgs e)
+        {
+            write_arduino(0, 4);
         }
     }
 }
