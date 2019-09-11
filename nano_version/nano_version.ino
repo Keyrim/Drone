@@ -19,7 +19,7 @@ unsigned long previous_timer_rising = 0 ;
 unsigned int  chanels[number_of_chanel] ;
 
 //Constante compensation (PID coefs)
-const float kp_roll = 5.0, kp_pitch = 5.0, kp_yaw = 1.0 ;
+const float kp_roll = 1.4, kp_pitch = 1.4, kp_yaw = 0 ;
 const float kd_roll = 0.0, kd_pitch = 0.0 ;
 const float ki_roll = 0.0, ki_pitch = 0.0 ;
 int compensation_max = 200;
@@ -173,7 +173,7 @@ void loop()
         global_power = chanels[3];
         roll_order = map(chanels[1], 1000, 2000, -inclination_max, inclination_max);
         pitch_order = map(chanels[2], 1000, 2000, -inclination_max, inclination_max);
-        yaw_order = map(chanels[3], 1000, 2000, -max_rotation_rate,  max_rotation_rate);
+        yaw_order = map(chanels[4], 1000, 2000, -max_rotation_rate,  max_rotation_rate);
 
         //error calculation
         roll_error = roll_order - X ;
@@ -184,18 +184,18 @@ void loop()
         pitch_compens = pitch_error * kp_pitch ;
         yaw_compens = yaw_compens * kp_yaw ;
         //Derivate
-        //roll_compens += (roll_error-roll_previous_error)*kd_roll;
-        //pitch_compens += (pitch_error - pitch_previous_error)*kd_pitch;
+        roll_compens += (roll_error-roll_previous_error)*kd_roll;
+        pitch_compens += (pitch_error - pitch_previous_error)*kd_pitch;
         
         //Update "previous" values
         roll_previous_error = roll_error ;
         pitch_previous_error = pitch_error;    
         
         //Motors are told what to do
-        moteur1.writeMicroseconds(check_motor_order(global_power + roll_compens + pitch_compens));
-        moteur2.writeMicroseconds(check_motor_order(global_power - roll_compens + pitch_compens));
-        moteur3.writeMicroseconds(check_motor_order(global_power - roll_compens - pitch_compens));
-        moteur4.writeMicroseconds(check_motor_order(global_power + roll_compens - pitch_compens));
+        moteur1.writeMicroseconds(check_motor_order(global_power + roll_compens + pitch_compens ));
+        moteur2.writeMicroseconds(check_motor_order(global_power - roll_compens + pitch_compens ));
+        moteur3.writeMicroseconds(check_motor_order(global_power - roll_compens - pitch_compens ));
+        moteur4.writeMicroseconds(check_motor_order(global_power + roll_compens - pitch_compens ));
     }
     else
     {
