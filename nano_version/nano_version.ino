@@ -144,12 +144,13 @@ void setup()
 
 void loop()
 {
-    //Here we determine in wich mode we are using signals from the rc transmiter
+    //Here we determine in wich fly mode we are using signals from the rc transmiter
     if(chanels[8]<1500)global = 0 ;
     else if(chanels[8]>1500)global = 1 ;
 
     if(global==0)
     {
+      //Flying mode where motors are set to 0
         moteur1.writeMicroseconds(1000);
         moteur2.writeMicroseconds(1000);
         moteur3.writeMicroseconds(1000);
@@ -157,6 +158,7 @@ void loop()
     }
     else if(global == 1)
     {
+        //Standard flying mode 
         read_mpu();
         //Compute our raw values
         float total_vector = sqrt(AcX*AcX + AcY*AcY + AcZ*AcZ);    
@@ -183,7 +185,7 @@ void loop()
         roll_compens = roll_error * kp_roll ;
         pitch_compens = pitch_error * kp_pitch ;
         yaw_compens = yaw_compens * kp_yaw ;
-        //Derivate
+        //Derivate (we compute the derivate and then we add it to our compensation)
         roll_compens += (roll_error-roll_previous_error)*kd_roll;
         pitch_compens += (pitch_error - pitch_previous_error)*kd_pitch;
         
@@ -208,11 +210,14 @@ void loop()
     
 
     //We regulate our frequence here
+    //Need a constant frequence to compute the gyroscope angle
     while(micros()<loop_timer + 1000000/frequence);
     loop_timer = micros();
   
 }
 
+
+//This function is called when the pin 2 state changes
 void rising()
 {
   unsigned int signal_ppm = micros()-previous_timer_rising ;
@@ -221,8 +226,7 @@ void rising()
     actual_chanel = 0 ;
     previous_timer_rising = micros();
     chanels[actual_chanel] = signal_ppm ;
-  }
-  
+  }  
 
   else 
   {
@@ -230,9 +234,6 @@ void rising()
     if (actual_chanel == number_of_chanel) actual_chanel = 0 ;
     chanels[actual_chanel] = signal_ppm ;
     previous_timer_rising = micros();
-  }
-  
-
-  
+  }  
   
 }
