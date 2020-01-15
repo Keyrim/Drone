@@ -1,4 +1,4 @@
-//Conection :
+//Conections :
 //MPU Sda : A4
 //MPU Scl : A5
 //PPM input : D2
@@ -20,9 +20,9 @@ unsigned int  chanels[number_of_chanel] ;
 
 //Constante compensation (PID coefs)
 const float kp_roll = 1.4, kp_pitch = 1.4, kp_yaw = 0 ;
-const float kd_roll = 0.0, kd_pitch = 0.0 ;
+const float kd_roll = 0.0, kd_pitch = 0.0, kd_yaw = 0 ;
 const float ki_roll = 0.0, ki_pitch = 0.0 ;
-int compensation_max = 200;
+#define compensation_max 200 
 
 //Error variables
 float roll_error, pitch_error, yaw_error ;
