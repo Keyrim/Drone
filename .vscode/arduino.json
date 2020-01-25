@@ -2,5 +2,5 @@
     "board": "arduino:avr:nano",
     "port": "COM9",
     "configuration": "cpu=atmega328",
-    "sketch": "nano_version\\nano_version.ino"
+    "sketch": "modulable-V1\\modulable-V1.ino"
 }
