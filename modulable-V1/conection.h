@@ -27,6 +27,9 @@
 #define CHANEL_YAW 4
 #define CHANEL_SWITCH_1 5   //Switch 1 à deux position pour le control global des moteurs 
 
+//LEDS d'état
+#define STATE_LED 3 
+
 
 
 #endif
