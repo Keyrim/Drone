@@ -4,9 +4,12 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+
+
 #define MPU_I2C 0x68
 #define FREQUENCE 250 
-#define ALPHA 0.004
+#define ALPHA 0.0004
+
 
 
 class Mpu_filter
@@ -30,8 +33,12 @@ class Mpu_filter
         float gy_x, gy_y, gy_z;
         //Raw acc values
         float acc_x, acc_y, acc_z ;
+        //temperature
+        float tmp ;
+        
         //Calibration acc values
         float acc_x_cal = 0, acc_y_cal = 0 ;
+        float gy_x_cal = 0, gy_y_cal = 0 ;
 };
 
 #endif

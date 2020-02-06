@@ -11,7 +11,7 @@ unsigned int check_esc_order(unsigned int signal){
 }
 
 //PID settings
-#define kP 1
+#define kP 0
 #define kI 0
 #define kD 0
 #define MAX_PID 200
@@ -42,9 +42,9 @@ unsigned int esc_pulses[4] = {1000, 1000, 1000, 1000};
 //Store our sequences for each states
 //sequences are stored on 5 bit of a byte as we just need to know if it is low 0 or high 1 
 #define NUMBER_OF_STATES 5
-#define sequence1 0b00011010
-#define sequence2 0b00011110
-#define sequence3 0b00011100
+#define sequence1 0b00011000
+#define sequence2 0b00011100
+#define sequence3 0b00011010
 #define sequence4 0b00010000
 #define sequence5 0b00011110
 
@@ -54,7 +54,11 @@ byte sequence_evolution_counter = 0 ;
 byte state = STATE_INIT_MPU ;    //We start with the mpu init state 
 
 
+///////////////////////////////////////////// SETUP¨////////////////////////////////////////////////////////////////////////////
+
+
 void setup(){
+  pinMode(A0, OUTPUT);
   //Initialize the timer
   //We must do it first as it is requiered for the state led 
   timer.init();
@@ -67,14 +71,10 @@ void setup(){
   Serial.println("Program begins");
 
   //Init & calibrate the mpu  
-  //mpu.set_mpu();
+  mpu.set_mpu();
 
   state = STATE_CALIB_MPU ;
-  //mpu.calibrate(100);
-
-
-
-  
+  mpu.calibrate(200); 
 
   //Set our pids coef
   roll_pid.set_coef(kP, kD, kI);
@@ -98,12 +98,15 @@ void setup(){
 
 }
 
+
 IT_FUNCTION{
   //Blink the led according to sequence we want 
-  static byte led_state = sequences[state] >> (4 - sequence_evolution_counter) ;
+  byte led_state = sequences[state] ;
+  led_state = led_state >> (5 - sequence_evolution_counter) ;
+  //Serial.println(state);
   led_state &= 0b00000001 ;
   sequence_evolution_counter ++ ;
-  if(sequence_evolution_counter == 4)
+  if(sequence_evolution_counter == 5)
     sequence_evolution_counter = 0 ;
   digitalWrite(STATE_LED, led_state); 
 
@@ -116,7 +119,8 @@ void loop(){
   //  ====================== deux secondes dispo ~ donc lecture mpu et compilation des sorties des moteurs
 
   //Update MPU
-  //mpu.update(true);
+  
+  mpu.update(true);
 
   if(state == STATE_MOTOR_DOWN){
     for(byte m = 0; m < 4; m++)
@@ -124,21 +128,24 @@ void loop(){
   
   }
 
-  else if(state = STATE_FLYING){
+  else if(state == STATE_FLYING && chanels[CHANEL_THROTTLE] > 1050){
     //Pid calculation 
-    static unsigned int throttle = chanels[CHANEL_THROTTLE] - 1000;
+    unsigned int throttle = chanels[CHANEL_THROTTLE] ;
     float pitch_comp = pitch_pid.compute_pid(consigne_pitch - mpu.Y);
     float roll_comp = roll_pid.compute_pid(consigne_roll - mpu.X);
 
-    esc_pulses[0] = check_esc_order(pitch_comp + roll_comp + throttle) ;
+    esc_pulses[0] = check_esc_order(-pitch_comp + roll_comp + throttle) ;
     esc_pulses[1] = check_esc_order(pitch_comp + roll_comp + throttle);
-    esc_pulses[2] = check_esc_order(pitch_comp + roll_comp + throttle) ;
-    esc_pulses[3] = check_esc_order(pitch_comp + roll_comp + throttle) ;
+    esc_pulses[2] = check_esc_order(pitch_comp - roll_comp + throttle) ;
+    esc_pulses[3] = check_esc_order(-pitch_comp - roll_comp + throttle) ;
 
 
   }
-
-
+  else{
+    for(byte m = 0; m < 4; m++)
+      esc_pulses[m] = 1000 ; 
+  
+  }
 
   //Pour passer en mode de vol et se maintenir
   //La consigne moteur doit être à zéro 
@@ -156,18 +163,18 @@ void loop(){
 
   //Escs pulses start, notice that we set our outputs high at "loop_timer" moment 
   PORTB |= 0b00001111 ;
-  for(byte m = 0; m < 4; m++){
-    esc_pulses[m] = chanels[CHANEL_THROTTLE] ; 
-  }
   
-
+  
+  // Serial.print(mpu.X);
+  // Serial.print("\t");
+  // Serial.println(mpu.acc_x);
 
   //Check if it is the time to shut down our esc signal
   while(PORTB != (PORTB & 0b11110000)){
     time_esc = micros() ; 
     for(byte m = 0; m < 4; m++){
       if(time_esc - loop_timer >= esc_pulses[m] ) {        
-        PORTB &= ~(1<<m) ;
+        PORTB = PORTB & ~(1<<m) ; 
       }
     }
   }
