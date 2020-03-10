@@ -19,6 +19,7 @@ float Pid::compute_pid(float error){
     p_out = kP * error ;
     i_out += kI * error ;
     d_out = (error - previous_error) * kD ;
+    //Serial.println(d_out);
     pid_output = p_out + i_out + d_out ;
     pid_output = min(max_output, pid_output);
     pid_output = max(-max_output, pid_output);

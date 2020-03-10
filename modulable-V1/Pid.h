@@ -12,15 +12,11 @@ class Pid
     private:
     //Functions 
         //
-    //Variables
-        //Errors      
-        float error, previous_error = 0 ;        
-        //compensation values
-        float p_out, i_out, d_out ;
+    //Variables    
         //ouput of the pid 
         float pid_output ;
         //Coeficients
-        float kP = 1, kD = 1, kI = 0 ;
+        float kP = 0, kD = 0, kI = 0 ;
 
 
     public:
@@ -29,8 +25,11 @@ class Pid
         //Set our Coeficients
         void set_coef(float p, float i, float d);
         float compute_pid(float error);
-    //Variables  
-        
+    //Variables     
+        //Errors      
+        float error, previous_error = 0 ; 
+        //compensation values
+        float p_out, i_out, d_out ;        
         //Max outout
         float max_output  ; 
 
