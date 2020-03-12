@@ -26,6 +26,9 @@
 #define CHANEL_THROTTLE 3
 #define CHANEL_YAW 4
 #define CHANEL_SWITCH_1 5   //Switch 1 à deux position pour le control global des moteurs 
+#define CHANEL_SWITCH_2 6   //Switch 2 à trois position
+#define CHANEL_SWITCH_3 7   //Switch 3 à trois position 
+#define CHANEL_SWITCH_4 8   //Switch 4 à deux position 
 
 //LEDS d'état
 #define STATE_LED A1

@@ -56,21 +56,34 @@ unsigned int esc_pulses[4] = {1000, 1000, 1000, 1000};
 
 //Store our sequences for each states
 //sequences are stored on 5 bit of a byte as we just need to know if it is low 0 or high 1
-#define NUMBER_OF_STATES 5
+#define NUMBER_OF_STATES 6
 #define sequence1 0b00011000
 #define sequence2 0b00011100
 #define sequence3 0b00011010
 #define sequence4 0b00010000
 #define sequence5 0b00011110
+#define sequence6 0b00000000
 
-byte sequences [NUMBER_OF_STATES] = {sequence1, sequence2, sequence3, sequence4, sequence5};
+byte sequences [NUMBER_OF_STATES] = {sequence1, sequence2, sequence3, sequence4, sequence5, sequence6};
 byte sequence_evolution_counter = 0 ;
 
 byte state = STATE_INIT_MPU ;    //We start with the mpu init state
 byte state_bat = STATE_BAT_LOW ;
 
 float v_bat = 12 ;
-
+// Le jeton de parole détermine quelle info on envoit de manière à ne pas envoyer toutes les info tous le temps
+// Actuelement on a 25 jetons au plus donc chaque info est envoyé à 250Hz / 25 = 10 Hz
+// 1  Batt
+// 2 mpu.X
+// 3 mpu.Y 
+// 4 moteur 1
+// 5        2
+// 5        3
+// 6        4
+// . . .
+// 25       .
+#define MAX_JETON_PAROLE 10
+byte jeton_parole = 0 ;
 
 ///////////////////////////////////////////// SETUP¨////////////////////////////////////////////////////////////////////////////
 
@@ -202,11 +215,50 @@ void loop() {
   while (micros() < loop_timer + 1000000 / frequence);
   loop_timer = micros();
   //            ----------------------------------------------------- début signal ESC ------------------------------------------------
-  //Escs pulses start, notice that we set our outputs high at "loop_timer" moment
-  PORTB |= 0b00001111 ;
+  PORTB |= 0b00001111 ; //Escs pulses start, notice that we set our outputs high at "loop_timer" moment
+  //On a une ms et PAS PLUS pour envoyer les info que l'on veut sur la liason radio
+  
+  String message = "" ;
+  char separation = ' ';
+  switch(jeton_parole){
+    case 0 :
+      Serial.print((String)v_bat + separation);
+      break;
+    case 1 :
+      Serial.print((String)mpu.X + separation);
+      break ;
+    case 2 :
+      Serial.print((String)mpu.Y + separation);
+      break ;
+    case 3 :
+      Serial.print((String)esc_pulses[0] + separation);
+      break ;
+    case 4 :
+      Serial.print((String)esc_pulses[1] + separation);
+      break ;
+    case 5 :
+      Serial.print((String)esc_pulses[2] + separation);
+      break ;
+    case 6 :
+      Serial.print((String)esc_pulses[3] + separation);
+      break ;
+    case 7 :
+      Serial.print((String)state);
+      break ;
+    case MAX_JETON_PAROLE - 1 :
+      Serial.println();
+    default :
+      break ;
+  }
 
-
-  //Check if it is the time to shut down our esc signal
+  //Update jeton parole value
+  jeton_parole ++ ;
+  if(jeton_parole >= MAX_JETON_PAROLE)
+    if(chanels[CHANEL_SWITCH_4 ] < 1500 )
+      jeton_parole = 0 ;
+    else 
+      jeton_parole = MAX_JETON_PAROLE ;
+  //Check if it is the time to shut down our esc signal ----------------------------------------------------------------------
   while (PORTB != (PORTB & 0b11110000)) {
     time_esc = micros() ;
     for (byte m = 0; m < 4; m++) {
