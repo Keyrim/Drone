@@ -1,4 +1,4 @@
-#include "conection.h"
+ #include "conection.h"
 #include "Mpu_filter.h"
 #include "timer-it.h"
 #include "Pid.h"
@@ -15,16 +15,17 @@ unsigned int check_esc_order(unsigned int signal) {
 
 //PID settings
 //Pour le pid sur le yaw je bosse sur la vitesse angulaire et non l'angle 
-#define kP_roll 5
-#define kP_pitch 5
-#define kP_yaw 0.3
+//Pid actuels : manque peut être très léger de kd mais assez clean comme ça 
+#define kP_roll 2.94
+#define kP_pitch 2.94
+#define kP_yaw 4
 
 #define kI_roll 0
 #define kI_pitch 0
 #define kI_yaw 0
     
-#define kD_roll 1
-#define kD_pitch 1
+#define kD_roll 0.27
+#define kD_pitch 0.27
 #define kD_yaw 0
 
 #define MAX_PID 200
@@ -99,7 +100,7 @@ void setup() {
   pinMode(STATE_BAT_LED, OUTPUT);
 
   //Begin Serial Comunication
-  Serial.begin(57600);
+  Serial.begin(115200);
   Serial.println("Program begins");
 
   //Init & calibrate the mpu
@@ -168,8 +169,11 @@ void loop() {
     state_bat = STATE_BAT_MIDLLE_LOW ;
   else 
     state_bat = STATE_BAT_LOW ;
+
+  //update_coefs();
   //Update MPU  
   mpu.update(true); 
+  
   //consigne are given in degrees
   //YAW
   consigne_yaw = map(chanels[CHANEL_YAW], 1000, 2000, -ROTATION_MAX_YAW, ROTATION_MAX_YAW)  ;
@@ -231,16 +235,16 @@ void loop() {
       Serial.print((String)mpu.Y + separation);
       break ;
     case 3 :
-      Serial.print((String)esc_pulses[0] + separation);
+      Serial.print((String)analogRead(A7) + separation);
       break ;
     case 4 :
-      Serial.print((String)esc_pulses[1] + separation);
+      Serial.print((String)analogRead(A6) + separation);
       break ;
     case 5 :
-      Serial.print((String)esc_pulses[2] + separation);
+      Serial.print((String)analogRead(A5) + separation);
       break ;
     case 6 :
-      Serial.print((String)esc_pulses[3] + separation);
+      Serial.print((String)chanels[4] + separation);
       break ;
     case 7 :
       Serial.print((String)state);
@@ -258,6 +262,8 @@ void loop() {
       jeton_parole = 0 ;
     else 
       jeton_parole = MAX_JETON_PAROLE ;
+
+      
   //Check if it is the time to shut down our esc signal ----------------------------------------------------------------------
   while (PORTB != (PORTB & 0b11110000)) {
     time_esc = micros() ;
@@ -289,4 +295,13 @@ void rising()
     previous_timer_rising = micros();
   }
 
+}
+
+void update_coefs(void){
+  float kp = (float)map(analogRead(ANALOG_KP), 0, 1023, 6000, 0) / 1000.0;
+  float kd = (float)map(analogRead(ANALOG_KD), 0, 1023, 2000, 0) / 1000.0;
+  Serial.println(kp);
+  Serial.println(kd);
+  roll_pid.set_coef(kp, 0, kd);
+  pitch_pid.set_coef(kp, 0, kd);
 }

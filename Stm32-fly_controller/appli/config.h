@@ -10,8 +10,8 @@
 #include "stm32f1xx_hal.h"
 
 //Choix de la cible utilisée.
-#define NUCLEO	1
-#define BLUEPILL 0
+#define NUCLEO	0
+#define BLUEPILL 1
 
 //_______________________________________________________
 //Configuration des broches utilisées...
@@ -122,13 +122,13 @@
 #define USE_BMP180				0	//Capteur de pression
 #define USE_MOTOR_DC			0
 #define USE_RTC					0
-#define USE_PWM					0
+#define USE_PWM					1
 #define USE_ESP8266				0//Module Wifi
 #define USE_NFC03A1				0
 #define USE_EPAPER				0
 #define	USE_VL53L0				0
 #define	USE_GPS					0
-#define USE_HCSR04				0
+#define USE_HCSR04				1
 
 #if USE_EPAPER
 	#define RST_Pin 			GPIO_PIN_1
